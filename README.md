@@ -1,11 +1,12 @@
 # MATLAB Fall 2014 – Research Plan (Template)
 (text between brackets to be removed)
 
-> * Group Name: (be creative!)
-> * Group participants names: (alphabetically sorted by last name)
-> * Project Title: (can be changed later)
+> * Group Name: Make America Great Again
+> * Group participants names: Yannick Bertschy, Mario Blatter, Guido Italiano, Aiping Yao
+> * Project Title: Investigating the Influence of Fake News on Opinion Formation
 
 ## General Introduction
+
 
 (States your motivation clearly: why is it important / interesting to solve this problem?)
 (Add real-world examples, if any)
