@@ -27,16 +27,18 @@ We will assume the number of individuals N and their connections M, as well as t
 Therefore, the varying parameters in this model are L, \psi and \phi. The latter is the same as in the original work of [1] in order to be able to compare our results with theirs.
 For obtaining rough but realistic estimates on L and \psi we will partly rely on a Stanford study [2].
 
+Note that for simplicity we do not consider fake news as individual information spreading across social networks following a power law, but rather as a constant "news source" (meaning that we assume the number of Fake News stories to be constant).
+
 ## Fundamental Questions
 
-The goal of this project is to find out the impact of Fake News on opinion formation.
-In particular, we want to investigate the number of individuals L in a system which need to be influenced to a significantly shift of the initial distribution of opinions in a society, which can also be interpreted as the cluster sizes. (Referred to as "consensus" state, as denoted in [1].
+The general goal of this project is to find out the impact of Fake News on opinion formation.
+In particular, we want to investigate the number of individuals L in a system which need to be influenced to significantly shift the initial distribution of opinions in a society, which can also be interpreted as the cluster sizes. (Referred to as "consensus" state in [1].)
 Additionally, it will be interesting to find out how the effect changes with varying probabilities \psi, i.e. how convincing these Fake News inputs are.
 
 ## Expected Results
 
 In the previous work conducted by [1], with time going to infinity, clusters will form with each cluster having only members of a certain opinion. 
-In our adapted model we expect that with large L and/or \psi one of these clusters will end up being substantially larger in size than the others. This corresponds to saying that the internet has the power to influence the formation of opinions.
+In our adapted model we expect that with large L and/or \psi one of these clusters will end up being substantially larger in size than the others. This corresponds to saying that the internet - in this particular example Fake News - has the power to influence the formation of opinions.
 Additionally, we expect that the system will reach consensus faster, as we have introduced an additional mechanism to change the opinions of individuals.
 
 ## References 
