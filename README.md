@@ -11,18 +11,20 @@ In light of recent discussions about the importance of so-called Fake News story
 The undoubtedly most popular example are the US elections in which this problem was controversely discussed.
 
 ## The Model
-The model presented in this research plan moves from the one described in the paper from P.Holme et. al [1], but with the additional implementation of an external influence. The model in [] figures N 
-people as vertices and each of these vertices (i) can have an arbitrary number of pairwise connections k(i) representing friendships. Each individual holds 1 out of G possible opinions on a specific current 
-topic. As the starting conditions for the model, the authors distribute the M total number of connections k(i) at random and assign a small range of possible opinions G. Further, the number of people 
-N and the connections M are fixed values. The dynamic of the system follows two rules:
+The model presented in this research plan bases largely on the one presented in the paper from P.Holme et. al [1], but with the additional implementation of an external influence.
+It figures N individuals as vertices. Each of these vertices (i) can have an arbitrary number of pairwise connections k(i) to another vertex representing friendship/acquaintance.
+What's more, each individual holds one out of G possible opinions on a topic (g(i)). For an initial example we intend to use the 2016 US elections and thus G = {Hillary Clinton, Donald Trump}. In a second step we will extend this to higher number of possible opinions/candidates.
+As the starting conditions for the model, we distribute the total number of connections M at random and assign each vertex an opinion in G.
+Note that we will assume the number of individuals N and their connections M are fixed values.
+The dynamic of the system follows two rules:
 1. Pick a vertex i at random. With the probability /phi a random connection to a vertex of a different opinion is changed to a random vertex of its same opinion g(i).
 2. With probability 1-\phi the vertex i adopts the (different) opinion of one of its neighbouring vertices.
 
-In our model we extend the dynamics in a way that at each iteration with a certain probability \psi we are able to change the opinion of L random vertices. This implementation lets us introduce an additional external influence corresponding to Fake News.
-Hence, the variable L is meant to represent the influence of media outlets on top of ideas spreading among acquaintances, modeling more accurately the increased internet-based reality,
-which is not accounted for in the existing paper.
+In our model we extend the dynamics in the following way:
+3. At each iteration we are able to change the opinion of L random vertices with a certain probability \psi. This implementation lets us introduce an external influence corresponding to Fake News.
+Hence, the variable L is meant to represent the influence of media outlets on top of ideas spreading among acquaintances, modeling more accurately the increased internet-based media reality, which is not accounted for in the existing paper.
 
-The varying parameters in this model are L, \psi and \phi. The latter are the same as in the original work of [1] in order to be able to compare our results with them.
+The varying parameters in this model are L, \psi and \phi. The latter is the same as in the original work of [1] in order to be able to compare our results with theirs.
 
 ## Fundamental Questions
 
