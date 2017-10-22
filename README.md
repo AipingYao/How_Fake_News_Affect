@@ -27,7 +27,7 @@ The varying parameters in this model are L, \psi and \phi. The latter are the sa
 ## Fundamental Questions
 
 The goal of this project is to find out the impact of Fake News on opinion formation.
-In particular, we want to investigate the number of individuals L in a system which need to be influenced to a significantly shift of the initial distribution of opinions in a society, which can also be interpreted as the cluster sizes.
+In particular, we want to investigate the number of individuals L in a system which need to be influenced to a significantly shift of the initial distribution of opinions in a society, which can also be interpreted as the cluster sizes. (Referred to as "consensus" state, as denoted in [1].
 Additionally, it will be interesting to find out how the effect changes with varying probabilities \psi, i.e. how convincing these Fake News inputs are.
 
 ## Expected Results
