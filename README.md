@@ -15,16 +15,17 @@ The model presented in this research plan bases largely on the one presented in 
 It figures N individuals as vertices. Each of these vertices (i) can have an arbitrary number of pairwise connections k(i) to another vertex representing friendship/acquaintance.
 What's more, each individual holds one out of G possible opinions on a topic (g(i)). For an initial example we intend to use the 2016 US elections and thus G = {Hillary Clinton, Donald Trump}. In a second step we will extend this to higher number of possible opinions/candidates.
 As the starting conditions for the model, we distribute the total number of connections M at random and assign each vertex an opinion in G.
-Note that we will assume the number of individuals N and their connections M are fixed values.
 The dynamic of the system follows two rules:
 1. Pick a vertex i at random. With the probability /phi a random connection to a vertex of a different opinion is changed to a random vertex of its same opinion g(i).
 2. With probability 1-\phi the vertex i adopts the (different) opinion of one of its neighbouring vertices.
 
 In our model we extend the dynamics in the following way:
-3. At each iteration we are able to change the opinion of L random vertices with a certain probability \psi. This implementation lets us introduce an external influence corresponding to Fake News.
+3. At each iteration we are able to change the opinion of L random vertices to a previously defined one with a certain probability \psi. This implementation lets us introduce an external influence corresponding to Fake News impact, favoring one particular candidate.
 Hence, the variable L is meant to represent the influence of media outlets on top of ideas spreading among acquaintances, modeling more accurately the increased internet-based media reality, which is not accounted for in the existing paper.
 
-The varying parameters in this model are L, \psi and \phi. The latter is the same as in the original work of [1] in order to be able to compare our results with theirs.
+We will assume the number of individuals N and their connections M, as well as the number of possible opinions G are fixed values.
+Therefore, the varying parameters in this model are L, \psi and \phi. The latter is the same as in the original work of [1] in order to be able to compare our results with theirs.
+For obtaining rough but realistic estimates on L and \psi we will partly rely on a Stanford study [2].
 
 ## Fundamental Questions
 
@@ -40,10 +41,9 @@ Additionally, we expect that the system will reach consensus faster, as we have 
 
 ## References 
 
-[1] Holme, Petter; Newman, M.E.J. (2006): Nonequilibrium phase transition in the coevolution of networks and opinions. 
+[1] Holme, Petter; Newman, M.E.J. (2006): Nonequilibrium phase transition in the coevolution of networks and opinions.
+[2] Hunt Allcott and Matthew Gentzkow, Social Media and Fake News in the 2016 Election, Journal of Economic Perspectives—Volume 31, Number 2—Spring 2017—Pages 211–236
 
 ## Research Methods
 
 Agent-Based Model
-
-(Cellular Automata, Agent-Based Model, Continuous Modeling...) (If you are not sure here: 1. Consult your colleagues, 2. ask the teachers, 3. remember that you can change it afterwards)
