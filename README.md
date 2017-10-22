@@ -16,11 +16,12 @@ It figures N individuals as vertices. Each of these vertices (i) can have an arb
 What's more, each individual holds one out of G possible opinions on a topic (g(i)). For an initial example we intend to use the 2016 US elections and thus G = {Hillary Clinton, Donald Trump}. In a second step we will extend this to higher number of possible opinions/candidates.
 As the starting conditions for the model, we distribute the total number of connections M at random and assign each vertex an opinion in G.
 The dynamic of the system follows two rules:
-1. Pick a vertex i at random. With the probability /phi a random connection to a vertex of a different opinion is changed to a random vertex of its same opinion g(i).
-2. With probability 1-\phi the vertex i adopts the (different) opinion of one of its neighbouring vertices.
+  1. Pick a vertex i at random. With the probability /phi a random connection to a vertex of a different opinion is changed to a random vertex of its same opinion g(i).
+  2. With probability 1-\phi the vertex i adopts the (different) opinion of one of its neighbouring vertices.
 
 In our model we extend the dynamics in the following way:
-3. At each iteration we are able to change the opinion of L random vertices to a previously defined one with a certain probability \psi. This implementation lets us introduce an external influence corresponding to Fake News impact, favoring one particular candidate.
+
+  3. At each iteration we are able to change the opinion of L random vertices to a previously defined one with a certain probability \psi. This implementation lets us introduce an external influence corresponding to Fake News impact, favoring one particular candidate.
 Hence, the variable L is meant to represent the influence of media outlets on top of ideas spreading among acquaintances, modeling more accurately the increased internet-based media reality, which is not accounted for in the existing paper.
 
 We will assume the number of individuals N and their connections M, as well as the number of possible opinions G are fixed values.
