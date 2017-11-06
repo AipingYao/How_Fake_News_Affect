@@ -32,14 +32,15 @@ double_connections=(2*M-sum(sum(Connections))-sum(diag(Connections)))/2;
 disp("Initialisation complete. " + double_connections + ...
      " double connection(s).")
 %------------- CONFIG ---------
-no_of_runs=50; % amount of times to run simulation
-duration=100000; % number of iterations
+no_of_runs=5; % amount of times to run simulation
+duration=1000000; % number of iterations
 %------------- ENDCONFIG ------
 
 ClusterSizes=zeros(G,no_of_runs);
 
 for j=1:no_of_runs
     %------------- Iteration
+    %"Run " + j + " of " + no_of_runs + " runs."
     disp("Run " + j + " of " + no_of_runs + " runs.")
     for i=1:duration
         person=randi(N);
@@ -53,8 +54,8 @@ for j=1:no_of_runs
             if number<phi % move edge
                 % remove random friend
                 goodbye_friend=randi(no_of_friends);
-                Connections(person,goodbye_friend)=0;
-                Connections(goodbye_friend,person)=0;
+                Connections(person,Friends(goodbye_friend))=0;
+                Connections(Friends(goodbye_friend),person)=0;
                 % find people with same opinion and set connection
                 SameOpinionFriends=find(Individuals==op); % indices of friends
                 new_friend_number=randi(size(SameOpinionFriends,2));
@@ -63,7 +64,7 @@ for j=1:no_of_runs
                 Connections(new_friend,person)=1;
             else % change opinion
                 opinion_friend=randi(no_of_friends);
-                Individuals(person)=Individuals(opinion_friend);
+                Individuals(person)=Individuals(Friends(opinion_friend));
             end
         end
     end
