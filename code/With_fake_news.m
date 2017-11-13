@@ -10,6 +10,11 @@ G=N/gamma; % number of opinion
 phi=0.98; % transition probability
 
 
+Fake.no = 2;
+Fake.target = 1;
+Fake.beta = 0.001;
+
+
 no_of_runs= 1; % amount of times to run simulation
 duration= 100000; % number of iterations
 %------------- ENDCONFIG -----------------------
@@ -31,4 +36,3 @@ grid on;
 axis([0 2*G 0 0.01]);
 %hold on;plot(p(:,5),'color','b');
 %hold on;plot(p(:,r),'color','k');
-
