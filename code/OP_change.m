@@ -1,4 +1,4 @@
-function ClusterSizes = opinion_change_model(N,M,k,G,phi,no_of_runs,duration,beta,Fake)
+function ClusterSizes = OP_changel(N,M,k,G,phi,no_of_runs,duration,Fake)
 
 % opinion array
 Individuals=randi(G,N,1);
@@ -79,7 +79,7 @@ else
                 number=rand();
                 %%% ------ ADD FAKE NEWS ---------------- %%%
                 
-                op = fake_news_effect(Individuals,person,op,target,fake_news,beta)
+                op = fake_news_effect(Individuals,person,op,target,fake_news,beta);
     
                 
                 if number<phi % move edge

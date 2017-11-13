@@ -11,7 +11,7 @@ if op == target
 else
     infpro = 1-(1-beta).^(fake_news);
     if rand < infpro
-        Individuals(person) = G(target);   %% change the opinion to the target one;
+        Individuals(person) = target;   %% change the opinion to the target one;
         op = Individuals(person);
     end
 end

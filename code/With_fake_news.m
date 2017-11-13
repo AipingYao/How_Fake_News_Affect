@@ -7,19 +7,20 @@ N=3200; % no of people
 k=2*M/N; % avg degree
 gamma=20; % N/G
 G=N/gamma; % number of opinion
+G = 2;
 phi=0.98; % transition probability
 
 
-Fake.no = 2;
-Fake.target = 1;
-Fake.beta = 0.001;
+Fake.no = 50;   % number of fake news
+Fake.target = 1;  % target opinion fake news want to be;
+Fake.beta = 0.1;   % fake news affect possibility;
 
 
 no_of_runs= 1; % amount of times to run simulation
 duration= 100000; % number of iterations
 %------------- ENDCONFIG -----------------------
 
-ClusterSizes = opinion_change_model(N,M,k,G,phi,no_of_runs,duration);
+ClusterSizes = OP_change(N,M,k,G,phi,no_of_runs,duration,Fake);
 
 
 for r = 1:2:no_of_runs
