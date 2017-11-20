@@ -43,8 +43,8 @@ if fake_news == 0
             else
                 number=rand();
                 if number<phi % move edge
-                    % remove random friend
-                    goodbye_friend=randi(no_of_friends);
+                    % remove random friend  %comments:why do we need goodbye friend? where did you move the friends to?
+                    goodbye_friend=randi(no_of_friends);   
                     Connections(person,Friends(goodbye_friend))=0;
                     Connections(Friends(goodbye_friend),person)=0;
                     % find people with same opinion and set connection
@@ -98,10 +98,15 @@ else
                     Individuals(person)=Individuals(Friends(opinion_friend));
                 end
             end
+            
+
+            
         end
         for i=1:G
             ClusterSizes(i,j)=size(find(Individuals==i),1);
         end
     end
+    
+
     
 end
