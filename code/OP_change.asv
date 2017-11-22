@@ -23,7 +23,7 @@ end
 
 
 
-ClusterSizes=zeros(G);
+ClusterSizes=zeros(G,1);
 %%
 if Fake.add == 0
     
@@ -100,7 +100,7 @@ else
         
     end
     for i=1:G
-        ClusterSizes(i)=size(find(Individuals==i),1);
+        ClusterSizes(i,j)=size(find(Individuals==i),1);
     end
 end
 

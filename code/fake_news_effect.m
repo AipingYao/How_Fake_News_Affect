@@ -5,13 +5,21 @@
 
 %%
 
-function op = fake_news_effect(Individuals,person,op,target,fake_news,beta)
-if op == target
+function op = fake_news_effect(Individuals,person,op,Fake,ind)
+
+if op == Fake.target
     Individuals(person) = op;
 else
-    infpro = 1-(1-beta).^(fake_news);
+    if ind == 1
+        infpro = 1-(1-Fake.beta(1)).^(Fake.no(1));
+    elseif ind == 2
+        infpro = 1-(1-Fake.beta(2)).^(Fake.no(2));
+    elseif ind == 3
+        infpro = 1-(1-Fake.beta(1)).^Fake.no(1)*(1-Fake.beta(2)).^Fake.no(2);
+    end
+    %infpro = 1-(1-beta).^(fake_news);
     if rand < infpro
-        Individuals(person) = target;   %% change the opinion to the target one;
+        Individuals(person) = Fake.target;   %% change the opinion to the target one;
         op = Individuals(person);
     end
 end

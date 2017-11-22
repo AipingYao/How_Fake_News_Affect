@@ -12,18 +12,25 @@ G=N/gamma; % number of opinion
 G = 2;
 phi=0.98; % transition probability
 
+Fake.add = 1;
+Fake.target = 1;    % target opinion fake news want to be;
 
-Fake.no = 0;   % number of fake news
-Fake.target = 1;  % target opinion fake news want to be;
-Fake.beta = 0.1;   % fake news affect possibility;
+Fake.medium = {'CNN','20mins','both'};
+Fake.beta = [0.5,0.1];           % fake news affect possibility;
+Fake.no = [1,3];               % number of fake news
+Fake.affect_person = [2,1,1]; 
+
+cost = 100*Fake.no(1) + 10*Fake.no(2)  %this is just a random equatioin, need to change
+        
+
 
 
 no_of_runs= 1; % amount of times to run simulation
 duration= 10000; % number of iterations
 %------------- ENDCONFIG -----------------------
 
-[ClusterSizes, Connections] = OP_change_Cell(N,M,G,phi,duration,Fake);
-[ClusterSizes] = OP_change_Cell(N,M,G,phi,duration,Fake);
+%[ClusterSizes, Connections] = OP_change_Cell(N,M,G,phi,duration,Fake);
+[ClusterSizes,Connections] =  OP_change(N,M,k,G,phi,duration,Fake);
 
 
 % for r = 1:2:no_of_runs
