@@ -46,23 +46,13 @@ for j=1:no_of_runs
                 Connections(person,Friends(goodbye_friend))=0;
                 Connections(Friends(goodbye_friend),person)=0;
                 % find people with same opinion and set connection
-                % indices of people having same opinion
-                same_opinion_individuals = find(Individuals==op);
+                % indices of friends
+                same_opinion_individuals=find(Individuals==op);
                 % Remove person itself from it
-                same_opinion_individuals = ...
-                    same_opinion_individuals(same_opinion_individuals~=person);
+                same_opinion_individuals=same_opinion_individuals(same_opinion_individuals~=person);
                 % Drop friends with existing connections
-                if isempty(same_opinion_individuals)
-                    disp("len was already 0")
-                end
-                same_opinion_individuals = ...
-                    setdiff(same_opinion_individuals,Friends);
-                if isempty(same_opinion_individuals)
-                    disp("len 0");
-                end
-                if isempty(same_opinion_individuals)
-                    continue
-                end
+                same_opinion_individuals=setdiff(same_opinion_individuals,Friends);
+                
                 new_friend_number=randi(size(same_opinion_individuals,1));
                 new_friend=same_opinion_individuals(new_friend_number,1);
                 Connections(person,new_friend)=1;
@@ -74,8 +64,7 @@ for j=1:no_of_runs
 %                     disp("new_friend_number: " + new_friend_number);
 %                     disp("new_friend: " + new_friend);
 %                     disp("goodbye_friend: " + goodbye_friend);
-%                     disp("Friends(goodbye_friend): " + ... 
-%                         Friends(goodbye_friend))
+%                     disp("Friends(goodbye_friend): " + Friends(goodbye_friend))
                 end
             else % change opinion
                 opinion_friend=randi(no_of_friends);
