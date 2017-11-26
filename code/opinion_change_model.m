@@ -15,21 +15,23 @@ for i=1:M
     Connections(y,x)=1;
 end
 
-count = 0;
-
 % I assign 2 times M entries in the connection matrix
 % Except for when the value is in the diagonal, I set it twice to the same
 % index, so subtract it
 double_connections=(2*M-sum(sum(Connections))-sum(diag(Connections)))/2;
-disp("Initialisation complete. " + double_connections + ...
-    " double connection(s).")
+
+init = "Initialisation complete: %d double connections\n";
+init_str = sprintf(init, double_connections);
+fprintf(init_str)
 
 ClusterSizes=zeros(G,no_of_runs);
 
 for j=1:no_of_runs
     %------------- Iteration
-    %"Run " + j + " of " + no_of_runs + " runs."
-    disp("Run " + j + " of " + no_of_runs + " runs.")
+    %disp("Run " + j + " of " + no_of_runs + " runs")
+    run = "Run %d of %d\n";
+    run_str = sprintf(run, j, no_of_runs);
+    fprintf(run_str)
     for i=1:duration
         person=randi(N);
         op=Individuals(person);
@@ -52,14 +54,9 @@ for j=1:no_of_runs
                 same_opinion_individuals = ...
                     same_opinion_individuals(same_opinion_individuals~=person);
                 % Drop friends with existing connections
-                if isempty(same_opinion_individuals)
-                    disp("len was already 0")
-                end
                 same_opinion_individuals = ...
                     setdiff(same_opinion_individuals,Friends);
-                if isempty(same_opinion_individuals)
-                    disp("len 0");
-                end
+                
                 if isempty(same_opinion_individuals)
                     continue
                 end
@@ -67,23 +64,12 @@ for j=1:no_of_runs
                 new_friend=same_opinion_individuals(new_friend_number,1);
                 Connections(person,new_friend)=1;
                 Connections(new_friend,person)=1;
-                conn_after = sum(sum(Connections));
-                if conn_after~=conn_before
-                    count = count+1;
-%                     disp("Person is " + person);
-%                     disp("new_friend_number: " + new_friend_number);
-%                     disp("new_friend: " + new_friend);
-%                     disp("goodbye_friend: " + goodbye_friend);
-%                     disp("Friends(goodbye_friend): " + ... 
-%                         Friends(goodbye_friend))
-                end
             else % change opinion
                 opinion_friend=randi(no_of_friends);
                 Individuals(person)=Individuals(Friends(opinion_friend));
             end
         end
     end
-    disp("No of reset connections: " + count)
     for i=1:G
         ClusterSizes(i,j)=size(find(Individuals==i),1);
     end
