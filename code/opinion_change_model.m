@@ -4,8 +4,8 @@ function [ClusterSizes,Connec_matrix,Opinion_matrix] = opinion_change_model(N,M,
 [Individuals,Connections]=initialize(N,M,G);
 
 ClusterSizes=zeros(G,no_of_runs);
-Connec_matrix=zeros(N,N,duration);
-Opinion_matrix=zeros(N,duration);
+%Connec_matrix=zeros(N,N,duration);
+%Opinion_matrix=zeros(N,duration);
 
 for i=1:no_of_runs
 
@@ -17,8 +17,8 @@ for i=1:no_of_runs
         
         % Storing connections and opinion array at every iteration
         % Timeconsuming?! TODO maybe only do for last run
-        Connec_matrix(:,:,i) = Connections;
-        Opinion_matrix(:,i) = Individuals;
+        % Connec_matrix(:,:,i) = Connections;
+        % Opinion_matrix(:,i) = Individuals;
         
         person=randi(N);
         op=Individuals(person);
@@ -56,7 +56,7 @@ for i=1:no_of_runs
             end
         end
     end
-    for i=1:G
-        ClusterSizes(i,j)=size(find(Individuals==i),1);
+    for j=1:G
+        ClusterSizes(j,i)=size(find(Individuals==j),1);
     end
 end
