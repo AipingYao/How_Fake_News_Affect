@@ -1,7 +1,7 @@
 %------------Initialise model
 clear all
 
-%------------- CONFIG ------------------------
+%------------- CONFIG -------------------------
 M=6400; % no of connections
 N=3200; % no of people
 k=2*M/N; % avg degree
@@ -9,14 +9,13 @@ gamma=10; % N/G
 G=N/gamma; % number of opinion
 phi=0.04; % transition probability
 
-
 no_of_runs= 5; % amount of times to run simulation
-duration= 1000000; % number of iterations
+duration= 10; % number of iterations within each run
 %------------- ENDCONFIG -----------------------
 
 ClusterSizes = opinion_change_model(N,M,k,G,phi,no_of_runs,duration);
 
-for r = 1:2:no_of_runs
+for r = 1:no_of_runs
     ClusterCount = squeeze(ClusterSizes(:,r));
     for s = 1:2*max(ClusterCount)
         p(s,r) = size(find(ClusterCount(:) == s),1);

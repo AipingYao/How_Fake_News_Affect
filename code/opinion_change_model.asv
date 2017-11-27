@@ -4,22 +4,19 @@ function [ClusterSizes,Connec_matrix,Opinion_matrix] = opinion_change_model(N,M,
 [Individuals,Connections]=initialize(N,M,G);
 
 ClusterSizes=zeros(G,no_of_runs);
-Connec_matrix=zeros(N,N,duration);
-Opinion_matrix=zeros(N,duration);
+Connec_matrix=(M,M,no_of_runs);
+Opinion
 
-for i=1:no_of_runs
+for j=1:no_of_runs
 
     run = "Run %d of %d\n";
-    run_str = sprintf(run, i, no_of_runs);
+    run_str = sprintf(run, j, no_of_runs);
     fprintf(run_str)
     
-    for j=1:duration
-        
-        % Storing connections and opinion array at every iteration
-        % Timeconsuming?! TODO maybe only do for last run
-        Connec_matrix(:,:,i) = Connections;
-        Opinion_matrix(:,i) = Individuals;
-        
+    Connec_matrix(:,:,i) = Connections;
+    Opinion_matrix(:,i) = Individuals;
+    
+    for i=1:duration
         person=randi(N);
         op=Individuals(person);
         Friends=find(Connections(person,:)==1); % person's friends (indices)
@@ -30,6 +27,7 @@ for i=1:no_of_runs
             number=rand();
             if number<phi % move edge
                 % remove random friend
+                conn_before = sum(sum(Connections));
                 goodbye_friend=randi(no_of_friends);
                 Connections(person,Friends(goodbye_friend))=0;
                 Connections(Friends(goodbye_friend),person)=0;
@@ -60,3 +58,6 @@ for i=1:no_of_runs
         ClusterSizes(i,j)=size(find(Individuals==i),1);
     end
 end
+
+Connec_matrix=
+Opinion_matrix = Individuals

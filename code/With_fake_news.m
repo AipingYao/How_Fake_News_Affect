@@ -1,5 +1,4 @@
 %------------Initialise model
-
 close all;
 clear all;
 
@@ -23,17 +22,12 @@ Fake.affect_person = [2,1,1];
 
 cost = 100*Fake.no(1) + 10*Fake.no(2)  %this is just a random equatioin, need to change
         
-
-
-
 no_of_runs= 5; % amount of times to run simulation
-duration= 1000; % number of iterations
+duration= 1000; % number of iterations with each run
 %------------- ENDCONFIG -----------------------
 
 %[ClusterSizes, Connections] = OP_change_Cell(N,M,G,phi,duration,Fake);
-[ClusterSizes,Connec_matrix,Opinion_matrix] =  OP_change(N,M,k,G,phi,duration,no_of_runs,Fake);
-
-
+[ClusterSizes,Connec_matrix,Opinion_matrix] = extended_model(N,M,k,G,phi,duration,no_of_runs,Fake);
 
 for t =1:duration
     mask = ones(N,duration);
@@ -48,7 +42,6 @@ for t =1:duration
     pause(.1)
 end
 
-
 if ( withGraphics )
     
     kermach = VideoWriter('Fake_news.avi');
@@ -57,9 +50,6 @@ if ( withGraphics )
     close(kermach)
 end
     
-
-
-
 % for r = 1:2:no_of_runs
 %     ClusterCount = squeeze(ClusterSizes(:,r));
 %     for s = 1:2*max(ClusterCount)
