@@ -1,5 +1,3 @@
-
-
 function ClusterSizes = opinion_change_model(N,M,k,G,phi,no_of_runs,duration)
 
 % opinion array
@@ -21,16 +19,19 @@ end
 % Except for when the value is in the diagonal, I set it twice to the same
 % index, so subtract it
 double_connections=(2*M-sum(sum(Connections))-sum(diag(Connections)))/2;
-disp("Initialisation complete. " + double_connections + ...
-    " double connection(s).")
 
+init = "Initialisation complete: %d double connections\n";
+init_str = sprintf(init, double_connections);
+fprintf(init_str)
 
 ClusterSizes=zeros(G,no_of_runs);
 
 for j=1:no_of_runs
     %------------- Iteration
-    %"Run " + j + " of " + no_of_runs + " runs."
-    disp("Run " + j + " of " + no_of_runs + " runs.")
+    %disp("Run " + j + " of " + no_of_runs + " runs")
+    run = "Run %d of %d\n";
+    run_str = sprintf(run, j, no_of_runs);
+    fprintf(run_str)
     for i=1:duration
         person=randi(N);
         op=Individuals(person);
@@ -42,13 +43,25 @@ for j=1:no_of_runs
             number=rand();
             if number<phi % move edge
                 % remove random friend
+                conn_before = sum(sum(Connections));
                 goodbye_friend=randi(no_of_friends);
                 Connections(person,Friends(goodbye_friend))=0;
                 Connections(Friends(goodbye_friend),person)=0;
                 % find people with same opinion and set connection
-                SameOpinionFriends=find(Individuals==op); % indices of friends
-                new_friend_number=randi(size(SameOpinionFriends,2));
-                new_friend=SameOpinionFriends(new_friend_number,1);
+                % indices of people having same opinion
+                same_opinion_individuals = find(Individuals==op);
+                % Remove person itself from it
+                same_opinion_individuals = ...
+                    same_opinion_individuals(same_opinion_individuals~=person);
+                % Drop friends with existing connections
+                same_opinion_individuals = ...
+                    setdiff(same_opinion_individuals,Friends);
+                
+                if isempty(same_opinion_individuals)
+                    continue
+                end
+                new_friend_number=randi(size(same_opinion_individuals,1));
+                new_friend=same_opinion_individuals(new_friend_number,1);
                 Connections(person,new_friend)=1;
                 Connections(new_friend,person)=1;
             else % change opinion
