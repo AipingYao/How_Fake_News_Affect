@@ -4,22 +4,24 @@ function [ClusterSizes,Connec_matrix,Opinion_matrix] = extended_model(N,M,k,G,ph
 [Individuals,Connections]=initialize(N,M,G);
 
 ClusterSizes=zeros(G,no_of_runs);
-% Connec_matrix=zeros(N,N,duration);
-Connec_matrix=0;
-Opinion_matrix=zeros(N,duration);
+Connec_matrix=zeros(N,N,no_of_runs);
+
+Opinion_matrix=zeros(N,no_of_runs);
 %%
 for i=1:no_of_runs
-
+    
     run = "Run %d of %d\n";
     run_str = sprintf(run, i, no_of_runs);
     fprintf(run_str)
+    Opinion_matrix(:,i) = Individuals;
+    Connec_matrix(:,:,i) = Connections;
 
     for j = 1:duration
 
         % Storing connections and opinion array at every iteration
         % Timeconsuming?!   
         % Connec_matrix(:,:,i) = Connections;
-        Opinion_matrix(:,j) = Individuals;
+
 
         person=randi(N);
         op=Individuals(person);
@@ -29,18 +31,7 @@ for i=1:no_of_runs
             continue
         else
             number=rand();
-            %%% ------ ADD FAKE NEWS TO several person ---------------- %%%
-            if Fake.add~=0
-                for ind = 1:length(Fake.medium)          %affect different reader groups of the medium
-                    for fk = 1:Fake.affect_person(ind)    % person in each groups
-                        person_affect = randi(N);
-                        person_affect_op = Individuals(person_affect);
-                        Individuals(person_affect) = fake_news_effect(Individuals,person,person_affect_op,Fake,ind);
-                    end
-                end
-            else
-                ;
-            end
+
 
             %%%-----------------------------------------------%%%
 
@@ -71,6 +62,18 @@ for i=1:no_of_runs
                 Individuals(person)=Individuals(Friends(opinion_friend));
             end
         end
+    end
+    
+    %%% ------ ADD FAKE NEWS TO several person ---------------- %%%
+    if Fake.add~=0
+        for ind = 1:length(Fake.medium)          %affect different reader groups of the medium
+            for fk = 1:Fake.affect_person(ind)    % person in each groups
+                person_affect = randi(N);
+                person_affect_op = Individuals(person_affect);
+                Individuals(person_affect) = fake_news_effect(Individuals,person,person_affect_op,Fake,ind);
+            end
+        end
+        
     end
 
     for j=1:G

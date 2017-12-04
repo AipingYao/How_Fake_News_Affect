@@ -13,9 +13,9 @@ no_of_runs= 1000; % amount of times to run simulation
 duration= 1000000; % number of iterations within each run
 %------------- ENDCONFIG -----------------------
 
-ClusterSizes_1 = opinion_change_model(N,M,k,G,phi_1,no_of_runs,duration);
-
-[s_averaged_binned_1, s_averaged_1] = plot_averaged_results(ClusterSizes_1,N,M,G,phi_1,duration,no_of_runs);
+% ClusterSizes_1 = opinion_change_model(N,M,k,G,phi_1,no_of_runs,duration);
+% 
+% [s_averaged_binned_1, s_averaged_1] = plot_averaged_results(ClusterSizes_1,N,M,G,phi_1,duration,no_of_runs);
 
 %------------Initialise 2nd model
 
@@ -23,9 +23,9 @@ ClusterSizes_1 = opinion_change_model(N,M,k,G,phi_1,no_of_runs,duration);
 phi_2=0.458; % transition probability
 %------------- ENDCONFIG -----------------------
 
-ClusterSizes_2 = opinion_change_model(N,M,k,G,phi_2,no_of_runs,duration);
-
-[s_averaged_binned_2, s_averaged_2] = plot_averaged_results(ClusterSizes_2,N,M,G,phi_2,duration,no_of_runs);
+% ClusterSizes_2 = opinion_change_model(N,M,k,G,phi_2,no_of_runs,duration);
+% 
+% [s_averaged_binned_2, s_averaged_2] = plot_averaged_results(ClusterSizes_2,N,M,G,phi_2,duration,no_of_runs);
 
 %------------Initialise 3rd model
 

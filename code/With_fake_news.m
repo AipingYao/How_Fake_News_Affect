@@ -3,43 +3,57 @@ close all;
 clear all;
 
 %------------- CONFIG ------------------------
-M=6400; % no of connections
+M=10000; % no of connections
 N=3200; % no of people
 k=2*M/N; % avg degree
 gamma=20; % N/G
 G=N/gamma; % number of opinion
 G = 2;
-phi=0.98; % transition probability
-withGraphics = 0;
+phi=0.2; % transition probability
+withGraphics = 1;
 
 Fake.add = 1; % 1 for fake news included, 0 for initial model
 Fake.target = 1;    % target opinion fake news want to be;
 
 Fake.medium = {'CNN','20mins','both'};
-Fake.beta = [0.1,0.4];           % fake news affect possibility;
-Fake.no = [1,3];               % number of fake news
-Fake.affect_person = [2,1,1]; 
+Fake.beta = [0.4,0.1];           % fake news affect possibility;
+Fake.no = [1,5];               % number of fake news
+Fake.affect_person = [5,1,1]; 
 
 cost = 100*Fake.no(1) + 10*Fake.no(2);  %this is just a random equatioin, need to change
         
-no_of_runs= 5; % amount of times to run simulation
-duration= 1000; % number of iterations with each run
+no_of_runs= 200; % amount of times to run simulation
+duration= 20; % number of iterations with each run
 %------------- ENDCONFIG -----------------------
 
 %[ClusterSizes, Connections] = OP_change_Cell(N,M,G,phi,duration,Fake);
 [ClusterSizes,Connec_matrix,Opinion_matrix] = extended_model(N,M,k,G,phi,duration,no_of_runs,Fake);
+ClusterSizes_no_fake_news = opinion_change_model(N,M,k,G,phi,no_of_runs,duration);
+
 
 if ( withGraphics )
     
-    for t =1:duration
-        mask = ones(N,duration);
+    for t =1:no_of_runs
+        mask = ones(N,no_of_runs);
         mask(:,t:end) = 0;
         bla = Opinion_matrix.*mask;
-        clf; hold on; imagesc(bla);
+     
+        clf; 
+        subplot(121);hold on; imagesc(bla);
         xlabel('iteration time');
         ylabel('People');
         title('Opinion\_Change')
-        axis([0 duration 0 N])
+        text(0.8*no_of_runs,N-100,['G(1) = ',num2str(ClusterSizes(1,t))],'fontsize',14,'color','r');
+        text(0.8*no_of_runs,N-300,['G(2) = ',num2str(ClusterSizes(2,t))],'fontsize',14,'color','r');        
+        axis([1 no_of_runs 0 N])
+
+
+        
+        subplot(122);hold on;imagesc(Connec_matrix(:,:,t));
+        axis([0 N 0 N]);
+        set(gcf,'position',[-58 387 1132 500]);
+        
+        
         A(t) = getframe();
         pause(.1)
     end
@@ -54,3 +68,20 @@ else
     plot_averaged_results(ClusterSizes,N,M,G,phi,duration,no_of_runs,Fake);
 
 end
+
+figure;
+hold on;f1 = plot([1:no_of_runs],ClusterSizes(1,:));
+hold on;f2 = plot([1:no_of_runs],ClusterSizes(2,:));
+
+hold on;f3 = plot([1:no_of_runs],ClusterSizes_no_fake_news(1,:),'-');
+hold on;f4 = plot([1:no_of_runs],ClusterSizes_no_fake_news(2,:),'-');
+grid on;
+
+set(f1,'MarkerSize',10);
+set(f2,'MarkerSize',10);
+
+
+
+
+
+
