@@ -1,7 +1,7 @@
 function [ClusterSizes,Connec_matrix,Opinion_matrix] = opinion_change_model(N,M,k,G,phi,no_of_runs,duration)
 
 % set up opinions and connectivity matrix
-[Individuals,Connections]=initialize(N,M,G);
+[IndividualsInit,ConnectionsInit]=initialize(N,M,G);
 
 ClusterSizes=zeros(G,no_of_runs);
 %Connec_matrix=zeros(N,N,duration);
@@ -9,33 +9,45 @@ ClusterSizes=zeros(G,no_of_runs);
 
 for i=1:no_of_runs
 
-    run = "Run %d of %d\n";
-    run_str = sprintf(run, i, no_of_runs);
-    fprintf(run_str)
+    iterations = "Run %d of %d\n";
+    iterations_str = sprintf(iterations, i, no_of_runs);
+    fprintf(iterations_str)
     
-    for j=1:duration
+    Individuals = IndividualsInit;
+    Connections = ConnectionsInit;
+    IndividualsBefore = zeros(size(Individuals));
+    ConnectionsBefore = zeros(size(Connections));
+    abort = 0;
+    count = 0;
+    
+    while abort<200
+    %for j=1:duration
+        count = count+1;
         
-        % Storing connections and opinion array at every iteration
-        % Timeconsuming?! TODO maybe only do for last run
-        % Connec_matrix(:,:,i) = Connections;
-        % Opinion_matrix(:,i) = Individuals;
+        % Store current state of opinions to check later
+        ConnectionsBefore = Connections;
+        IndividualsBefore = Individuals;
         
         person=randi(N);
-        op=Individuals(person);
+        opinion=Individuals(person);
         Friends=find(Connections(person,:)==1); % person's friends (indices)
         no_of_friends=size(Friends,2);
         if no_of_friends==0 % Skip if no friends
             continue
         else
             number=rand();
-            if number<phi % move edge
+            
+            % MOVE EDGE
+            
+            if number<phi
                 % remove random friend
                 goodbye_friend=randi(no_of_friends);
                 Connections(person,Friends(goodbye_friend))=0;
                 Connections(Friends(goodbye_friend),person)=0;
+                
                 % find people with same opinion and set connection
                 % indices of people having same opinion
-                same_opinion_individuals = find(Individuals==op);
+                same_opinion_individuals = find(Individuals==opinion);
                 % Remove person itself from it
                 same_opinion_individuals = ...
                     same_opinion_individuals(same_opinion_individuals~=person);
@@ -50,13 +62,38 @@ for i=1:no_of_runs
                 new_friend=same_opinion_individuals(new_friend_number,1);
                 Connections(person,new_friend)=1;
                 Connections(new_friend,person)=1;
-            else % change opinion
+            
+            % CHANGE OPINION
+            
+            else
                 opinion_friend=randi(no_of_friends);
                 Individuals(person)=Individuals(Friends(opinion_friend));
+                
+                % Abort criterion
+                if isequal(Individuals,IndividualsBefore)
+                    abort = abort+1;
+                else
+                    abort = 0;
+                end
+                
             end
+            
+%             % Abort criterion
+%             if (isequal(Individuals,IndividualsBefore) && ...
+%                     isequal(Connections,ConnectionsBefore))
+%                 abort = abort+1;
+%             else
+%                 abort = 0;
+%             end
         end
     end
-    for j=1:G
-        ClusterSizes(j,i)=size(find(Individuals==j),1);
+    
+    iterations = "Number of iterations was %d\n";
+    iterations_str = sprintf(iterations, count);
+    fprintf(iterations_str)
+    
+    % Store cluster sizes of current run j for evaluation
+    for g=1:G
+        ClusterSizes(g,i)=size(find(Individuals==g),1);
     end
 end
