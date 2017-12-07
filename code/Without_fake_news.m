@@ -15,7 +15,8 @@ duration= 1000000; % number of iterations within each run
 %------------- ENDCONFIG -----------------------
 
 [ClusterSizes,average_iterations] = ...
-    opinion_change_model(N,M,k,G,phi,no_of_runs,duration, abort_threshold);
+    opinion_change_model(N,M,k,G,phi,no_of_runs,duration,abort_threshold);
 
 [bla, s_averaged] = ...
-    plot_averaged_results(ClusterSizes,N,M,G,phi,duration,average_iterations,no_of_runs);
+    plot_averaged_results(ClusterSizes,N,M,G,phi,duration,...
+    average_iterations,no_of_runs);

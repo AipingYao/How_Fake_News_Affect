@@ -11,7 +11,7 @@ function [averaged_binned_cluster_sizes, s_averaged] = ...
 % ClusterSizes is a matrix with dimensions Gxno_of_runs which contains for
 % each run the cluster sizes of all opinions
 % ... describe rest of params
-% Fake struct containing all info on fake news input; 0 means no input
+% Fake struct containing all info on fake news input; [] means no input
 
 % TODO nicen up and comment a bit
 
@@ -65,14 +65,11 @@ axis([0 N*1.1 0 1.1]);
 % Textbox --
 dim = [.6 .5 1.0 0.4];
 box_string_format = ...
-    "Phi: 0.%d\n M: %d\n N: %d\n Opinions: %d\n Runs: %d\n Mean timesteps: %d";
+    "Fake News: %d\nPhi: 0.%d\n M: %d\n N: %d\n Opinions: %d\n Runs: %d\n Mean timesteps: %d";
 box_string = sprintf(box_string_format, ...
-    uint32(phi*1000),M,N,G,no_of_runs,uint32(average_iterations));
+    Fake.add,uint32(phi*1000),M,N,G,no_of_runs,uint32(average_iterations));
 annotation('textbox',dim,'String',box_string,'FitBoxToText','on');
-if ~isempty(Fake)
-    title('Results with Fake News')
-else
-    title('Results without Fake News')
+
 % -----
 
 hold on;
