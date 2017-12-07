@@ -89,13 +89,13 @@ for i=1:no_of_runs
                 
             end
             
-            % Abort criterion
-            if (isequal(Individuals,IndividualsBefore) && ...
-                    Individuals(new_friend)==Individuals(person))
-                abort = abort+1;
-            else
-                abort = 0;
-            end
+%             % Abort criterion
+%             if (isequal(Individuals,IndividualsBefore) && ...
+%                     Individuals(new_friend)==Individuals(person))
+%                 abort = abort+1;
+%             else
+%                 abort = 0;
+%             end
         end
     end
     

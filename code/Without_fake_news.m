@@ -2,8 +2,8 @@
 clear all
 
 %------------- CONFIG -------------------------
-M=640; % no of connections
-N=320; % no of people
+M=60; % no of connections
+N=30; % no of people
 k=2*M/N; % avg degree
 gamma=10; % N/G
 G=N/gamma; % number of opinion
