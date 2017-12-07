@@ -1,9 +1,11 @@
-function [ClusterSizes,Connec_matrix,Opinion_matrix] = opinion_change_model(N,M,k,G,phi,no_of_runs,duration)
+function [ClusterSizes,average_iterations,Connec_matrix,Opinion_matrix] = ...
+    opinion_change_model(N,M,k,G,phi,no_of_runs,duration,abort_threshold)
 
 % set up opinions and connectivity matrix
-[IndividualsInit,ConnectionsInit]=initialize(N,M,G);
+[IndividualsInit,ConnectionsInit] = initialize(N,M,G);
 
-ClusterSizes=zeros(G,no_of_runs);
+ClusterSizes = zeros(G,no_of_runs);
+Iterations = zeros(1,no_of_runs);
 %Connec_matrix=zeros(N,N,duration);
 %Opinion_matrix=zeros(N,duration);
 
@@ -16,17 +18,14 @@ for i=1:no_of_runs
     Individuals = IndividualsInit;
     Connections = ConnectionsInit;
     IndividualsBefore = zeros(size(Individuals));
-    ConnectionsBefore = zeros(size(Connections));
     abort = 0;
     count = 0;
-    abort_threshold = 1000;
     
     while abort<abort_threshold
     %for j=1:duration
         count = count+1;
         
         % Store current state of opinions to check later
-        ConnectionsBefore = Connections;
         IndividualsBefore = Individuals;
         
         person=randi(N);
@@ -107,4 +106,6 @@ for i=1:no_of_runs
     for g=1:G
         ClusterSizes(g,i)=size(find(Individuals==g),1);
     end
+    Iterations(i) = count;
 end
+average_iterations = mean(Iterations);
