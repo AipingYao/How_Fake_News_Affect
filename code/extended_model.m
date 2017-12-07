@@ -1,7 +1,7 @@
 function [ClusterSizes,Connec_matrix,Opinion_matrix] = extended_model(N,M,k,G,phi,duration,no_of_runs,Fake)
 
-% set up opinions and connectivity matrix
-[Individuals,Connections]=initialize(N,M,G);
+% Set up initial opinions and connectivity matrix
+[IndividualsInit,ConnectionsInit]=initialize(N,M,G);
 
 ClusterSizes=zeros(G,no_of_runs);
 Connec_matrix=zeros(N,N,no_of_runs);
@@ -10,6 +10,8 @@ Opinion_matrix=zeros(N,no_of_runs);
 %%
 for i=1:no_of_runs
     
+    Individuals = IndividualsInit;
+    Connections = ConnectionsInit;
     run = "Run %d of %d\n";
     run_str = sprintf(run, i, no_of_runs);
     fprintf(run_str)

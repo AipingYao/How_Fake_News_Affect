@@ -19,8 +19,9 @@ for i=1:no_of_runs
     ConnectionsBefore = zeros(size(Connections));
     abort = 0;
     count = 0;
+    abort_threshold = 1000;
     
-    while abort<200
+    while abort<abort_threshold
     %for j=1:duration
         count = count+1;
         
@@ -62,6 +63,15 @@ for i=1:no_of_runs
                 new_friend=same_opinion_individuals(new_friend_number,1);
                 Connections(person,new_friend)=1;
                 Connections(new_friend,person)=1;
+                
+                % Abort criterion
+                %  -> When connection set to person with different opinion
+                % reset abort counter
+                if (Individuals(new_friend)==Individuals(person))
+                    abort = abort+1;
+                else
+                    abort = 0;
+                end
             
             % CHANGE OPINION
             
@@ -70,6 +80,7 @@ for i=1:no_of_runs
                 Individuals(person)=Individuals(Friends(opinion_friend));
                 
                 % Abort criterion
+                % -> When the opinions have changed set counter back to 0
                 if isequal(Individuals,IndividualsBefore)
                     abort = abort+1;
                 else
@@ -78,13 +89,13 @@ for i=1:no_of_runs
                 
             end
             
-%             % Abort criterion
-%             if (isequal(Individuals,IndividualsBefore) && ...
-%                     isequal(Connections,ConnectionsBefore))
-%                 abort = abort+1;
-%             else
-%                 abort = 0;
-%             end
+            % Abort criterion
+            if (isequal(Individuals,IndividualsBefore) && ...
+                    Individuals(new_friend)==Individuals(person))
+                abort = abort+1;
+            else
+                abort = 0;
+            end
         end
     end
     
