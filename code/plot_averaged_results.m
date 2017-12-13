@@ -1,6 +1,6 @@
 function [averaged_binned_cluster_sizes, s_averaged] = ...
     plot_averaged_results(ClusterSizes,N,M,G,phi,duration, ...
-    average_iterations, no_of_runs,Fake)
+    average_iterations,no_of_runs,Fake)
 %PLOT_AVERAGED_RESULTS takes results from all runs of the model and plots
 % it as in Holme's paper, i.e. averaged and binned logarithmically,P(s) vs.
 % s
@@ -37,10 +37,14 @@ for i=2:length(bins)
     final_bins = [final_bins arr];
 end
 
+% Alternative bins (guessed from paper)
+final_bins = [1,2,3,4,5,6,7,9,11,14,17,20,26,31,38,46,57,69,83,105,125,150,...
+    200,250,300,380,460,570,700,850,1100,1200,1500,2000,2500,3000,3500];
+
 for j=2:length(final_bins)
     binsum = 0;
     if final_bins(j)>N
-        arr=s_averaged(final_bins(j):N);
+        arr=s_averaged(final_bins(j-1):N);
         binsum=sum(arr);
         s_averaged_binned(j-1)=binsum;
         break;
@@ -60,18 +64,27 @@ figure
 set(gca, 'XScale', 'log')
 set(gca, 'YScale', 'log')
 grid on;
-axis([0 N*1.1 0 1.1]);
 
 % Textbox --
-dim = [.6 .5 1.0 0.4];
+dim = [0.75 .5 0.9 0.4];
+% box_string_format = ...
+%     "Fake News: %d\nPhi: 0.%d\nM: %d\nN: %d\nOpinions: %d\nRuns: %d\nMean timesteps: %d";
+% box_string_format = ...
+%     "Fake News: %d\nPhi: %s\nM: %d\nN: %d\nOpinions: %d\nRuns: %d\nMean timesteps: %d";
+% box_string = sprintf(box_string_format, ...
+%     Fake.add,num2str(phi),M,N,G,no_of_runs,uint32(average_iterations));
 box_string_format = ...
-    "Fake News: %d\nPhi: 0.%d\n M: %d\n N: %d\n Opinions: %d\n Runs: %d\n Mean timesteps: %d";
+    'phi = %s\nRuns: %d\nIterations: \n%d';
 box_string = sprintf(box_string_format, ...
-    Fake.add,uint32(phi*1000),M,N,G,no_of_runs,uint32(average_iterations));
+    num2str(phi),no_of_runs,uint32(average_iterations));
 annotation('textbox',dim,'String',box_string,'FitBoxToText','on');
-
+yticks([0.000001 0.00001 0.0001 0.001 0.01 0.1]);
+ylabel('P(s)');
+xlabel('s');
+set(gcf,'units','points','position',[200,200,450,120])
+min_y = min(s_averaged_binned(s_averaged_binned>0))/2;
+axis([1 N*1.1 min_y max(s_averaged_binned)*10]);
 % -----
-
 hold on;
 
 plot(final_bins(1:no_of_bins),s_averaged_binned,'o');
