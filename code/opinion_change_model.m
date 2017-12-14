@@ -1,13 +1,25 @@
-function [ClusterSizes,average_iterations,Connec_matrix,Opinion_matrix] = ...
-    opinion_change_model(N,M,k,G,phi,no_of_runs,duration,abort_threshold)
+function [ClusterSizes,average_iterations] = ...
+    opinion_change_model(N,M,G,phi,no_of_runs,abort_threshold)
+% OPINION_CHANGE_MODEL is the implementation of Holme's model. Returns a
+% matrix ClusterSizes (G * no_of_runs) containing all cluster sizes for
+% each run in a column. average_iterations is the average number of
+% iterations needed to fulfill the abort criterion
+
+% N is the number of individuals in the model
+% M is the total number of connections in the network
+% G is the number of opinions
+% phi the transition probability used in the runs
+% no_of_runs is the number of times the model has run
+% abort_threshold specifies how many times the cluster sizes have to stay
+% the same before stopping iterating
+
+% --------------------------------------------------------
 
 % set up opinions and connectivity matrix
 [IndividualsInit,ConnectionsInit] = initialize(N,M,G);
 
 ClusterSizes = zeros(G,no_of_runs);
 Iterations = zeros(1,no_of_runs);
-%Connec_matrix=zeros(N,N,duration);
-%Opinion_matrix=zeros(N,duration);
 
 for i=1:no_of_runs
 
@@ -84,17 +96,8 @@ for i=1:no_of_runs
                     abort = abort+1;
                 else
                     abort = 0;
-                end
-                
+                end 
             end
-            
-%             % Abort criterion
-%             if (isequal(Individuals,IndividualsBefore) && ...
-%                     Individuals(new_friend)==Individuals(person))
-%                 abort = abort+1;
-%             else
-%                 abort = 0;
-%             end
         end
     end
     

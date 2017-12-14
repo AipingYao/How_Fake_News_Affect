@@ -1,6 +1,4 @@
-function [averaged_binned_cluster_sizes, s_averaged] = ...
-    plot_averaged_results(ClusterSizes,N,M,G,phi,duration, ...
-    average_iterations,no_of_runs,Fake)
+function plot_averaged_results(ClusterSizes,N,G,phi,average_iterations,no_of_runs)
 %PLOT_AVERAGED_RESULTS takes results from all runs of the model and plots
 % it as in Holme's paper, i.e. averaged and binned logarithmically,P(s) vs.
 % s
@@ -11,8 +9,8 @@ function [averaged_binned_cluster_sizes, s_averaged] = ...
 % N is the number of individuals in the model
 % G is the number of opinions
 % phi the transition probability used in the runs
-% ... describe rest of params
-% Fake struct containing all info on fake news input; [] means no input
+% average_iterations denotes the averaged iterations needed to abort
+% no_of_runs is the number of times the model has run
 
 population_count = zeros(N,1);
 cluster_size_probability = zeros(N,1);
@@ -83,5 +81,4 @@ min_y = min(s_averaged_binned(s_averaged_binned>0))/2;
 axis([1 N*1.1 min_y max(s_averaged_binned)+0.05]);
 
 plot(final_bins(1:no_of_bins),s_averaged_binned,'o');
-averaged_binned_cluster_sizes=ClusterSizes;
 end
